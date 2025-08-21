@@ -6,6 +6,7 @@ on:
 jobs:
   ssh-test:
     runs-on: ubuntu-latest
+    environment: prod   # 👈 this makes env secrets available
     steps:
       - name: 🔑 Test SSH Connection
         uses: appleboy/ssh-action@v1.0.0
@@ -18,3 +19,4 @@ jobs:
             echo "✅ SSH login successful!"
             uname -a
             uptime
+
