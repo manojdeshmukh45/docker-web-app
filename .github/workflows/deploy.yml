@@ -38,6 +38,13 @@ jobs:
         echo "📤 Pushing image to Docker Hub: $DOCKER_IMAGE_NAME:$TAG"
         docker push $DOCKER_IMAGE_NAME:$TAG
 
+    - name: 🔍 Test connectivity to Linode
+      run: |
+        echo "🔎 Pinging Linode server..."
+        ping -c 4 ${{ secrets.LINODE_HOST }} || true
+        echo "🔎 Checking if port 22 is open..."
+        nc -vz ${{ secrets.LINODE_HOST }} 22 || true
+
     - name: 🚀 Deploy to Linode via SSH
       uses: appleboy/ssh-action@v1.0.0
       with:
