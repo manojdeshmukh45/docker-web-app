@@ -38,21 +38,21 @@ jobs:
         echo "📤 Pushing image to Docker Hub: $DOCKER_IMAGE_NAME:$TAG"
         docker push $DOCKER_IMAGE_NAME:$TAG
 
-    - name: 🚀 Deploy to EC2 via SSH
+    - name: 🚀 Deploy to Linode via SSH
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_KEY }}
+        password: ${{ secrets.EC2_KEY }}
         script: |
           echo "🔁 Pulling latest image: $DOCKER_IMAGE_NAME:$TAG"
           docker pull $DOCKER_IMAGE_NAME:$TAG
-
+    
           echo "🧹 Cleaning up old container..."
           docker stop flask-container || true
           docker rm flask-container || true
-
+    
           echo "🚀 Running new container..."
           docker run -d --name flask-container -p 5000:5000 $DOCKER_IMAGE_NAME:$TAG
-
+    
           echo "✅ Deployment completed."
