@@ -48,11 +48,16 @@ jobs:
     - name: 🚀 Deploy to Linode via SSH
       uses: appleboy/ssh-action@v1.0.0
       with:
-        host: ${{ secrets.LINODE_HOST }}        # Linode public IP
-        username: ${{ secrets.LINODE_USER }}    # e.g., root or your user
-        password: ${{ secrets.LINODE_PASS }}    # SSH password
+        host: ${{ secrets.LINODE_HOST }}
+        username: ${{ secrets.LINODE_USER }}
+        password: ${{ secrets.LINODE_PASS }}
         port: 22
         script: |
+          # set variables inside the remote machine
+          export DOCKER_IMAGE_NAME=${{ secrets.DOCKER_IMAGE }}
+          export TAG=${{ env.TAG }}
+    
+          echo "🔎 Running deployment on $(hostname)"
           echo "🔁 Pulling latest image: $DOCKER_IMAGE_NAME:$TAG"
           docker pull $DOCKER_IMAGE_NAME:$TAG
     
@@ -64,3 +69,4 @@ jobs:
           docker run -d --name flask-container -p 5000:5000 $DOCKER_IMAGE_NAME:$TAG
     
           echo "✅ Deployment completed."
+
