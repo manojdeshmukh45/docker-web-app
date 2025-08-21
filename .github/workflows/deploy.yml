@@ -1,4 +1,4 @@
-name: CI/CD Deploy to EC2
+name: CI/CD Deploy to Linode
 
 on:
   push:
@@ -41,9 +41,10 @@ jobs:
     - name: 🚀 Deploy to Linode via SSH
       uses: appleboy/ssh-action@v1.0.0
       with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        password: ${{ secrets.EC2_KEY }}
+        host: ${{ secrets.LINODE_HOST }}        # Linode public IP
+        username: ${{ secrets.LINODE_USER }}    # e.g., root or your user
+        password: ${{ secrets.LINODE_PASS }}    # SSH password
+        port: 22
         script: |
           echo "🔁 Pulling latest image: $DOCKER_IMAGE_NAME:$TAG"
           docker pull $DOCKER_IMAGE_NAME:$TAG
