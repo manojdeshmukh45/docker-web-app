@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod   # 👈 this makes env secrets available
     steps:
+      - name: 🔍 Test SSH connectivity
+        run: |
+          echo "Testing port 22 on ${{ secrets.LINODE_HOST }}"
+          nc -vz ${{ secrets.LINODE_HOST }} 22 || true
+
       - name: 🔑 Test SSH Connection
         uses: appleboy/ssh-action@v1.0.0
         with:
