@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_IMAGE }}  # e.g., manojdeshmukh45/mvj
+      DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_IMAGE }}  # e.g., manojdeshmukh45/gopalan
 
     steps:
     - name: 🧾 Checkout Code
