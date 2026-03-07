@@ -31,7 +31,7 @@ jobs:
     - name: 🛠️ Build Docker Image with Dynamic Tag
       run: |
         echo "🔧 Building image: $DOCKER_IMAGE_NAME:$TAG"
-        docker build -t $DOCKER_IMAGE_NAME:$TAG .
+        docker build --no-cache -t $DOCKER_IMAGE_NAME:$TAG .
 
     - name: 📤 Push Tagged Image to Docker Hub
       run: |
